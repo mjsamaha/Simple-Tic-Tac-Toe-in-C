@@ -3,8 +3,8 @@
 #include <time.h> // seed random num generator
 
 /* defining constants */
-#define PLAYER 'X' // user symbol
-#define COMPUTER 'O' // computer's symbol
-#define EMPTY ' ' // defines empty space on board
+#define PLAYER 'X' 
+#define COMPUTER 'O' 
+#define EMPTY ' ' 
 
 char board[9]; 
