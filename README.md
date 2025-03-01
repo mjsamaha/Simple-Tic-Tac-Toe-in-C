@@ -48,3 +48,36 @@ void printReferenceBoard(){
     printf(" 7 | 8 | 9 \n\n");
 }
 ```
+
+### Printing the Current Game Board
+We need to print the current updated game board as it is, displaying the X's and O's, and also showcase the numbers (positions) for empty spaces
+This seems complex, but I'll break it down:
+- loop through all 9 positions in the array (0-8)
+- if board pos is empty (' '), print the position number, so player's knows where to play their moves
+- otherwise, we print the current value ('X' or 'O')
+- after every 3 elements, (end of row), we add a new line, or print | to separate columns
+- adding horizontal dividiers after row 1 and row 2
+- i == 2 (end of row 1), or i == 5 (end of row 2), then we print a horizontal divider --> ---+---+----
+
+
+```
+void printBoard() {
+    printf("\nCurrent Board:\n");
+    for (int i = 0; i < 9; i++) {
+        if (board[i] == ' ') {
+            printf(" %d ", i + 1);  // Show available position number
+        } else {
+            printf(" %c ", board[i]);  // Show 'X' or 'O'
+        }
+        
+        if ((i + 1) % 3 == 0)
+            printf("\n");
+        else
+            printf("|");
+        
+        if (i == 2 || i == 5)
+            printf("---+---+---\n");
+    }
+    printf("\n");
+}
+```
