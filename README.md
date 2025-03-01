@@ -24,3 +24,27 @@ In this simple approach to tic-tac-toe, I implemented a simple random move gener
 
 char board[9]; 
 ```
+
+### Create the function to initialize the board
+Set every board to an empty char cell at the start
+```
+void initBoard(){
+	for (int i = 0; i < 9; i++){
+		board[i] = EMPTY; // fill all elements with empty spaces
+	}
+}
+```
+
+### Printing a reference board
+This makes it so players can see the numbers(index), of which correspond on the board
+- Hopefully this helps you choose moves more faster and easily
+```
+void printReferenceBoard(){
+	printf("\nReference Board:\n");
+    printf(" 1 | 2 | 3 \n");
+    printf("---+---+---\n");
+    printf(" 4 | 5 | 6 \n");
+    printf("---+---+---\n");
+    printf(" 7 | 8 | 9 \n\n");
+}
+```
