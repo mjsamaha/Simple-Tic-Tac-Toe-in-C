@@ -9,6 +9,16 @@
 
 char board[9]; 
 
+// function prototypes
+void initBoard();
+void printBoard();
+void printReferenceBoard();
+int isMovesLeft();
+int checkWinner();
+void playerMove();
+void computerMove();
+void mainGameLoop();
+
 /* setting the board all empty at the start */
 void initBoard(){
 	for (int i = 0; i < 9; i++){
