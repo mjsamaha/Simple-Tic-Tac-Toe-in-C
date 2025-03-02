@@ -1,5 +1,8 @@
 # Simple-Tic-Tac-Toe-in-C
-Simple Tic Tac Toe in C with an easy randomized move generation. Learning C through use of textbooks is cool and all, but making game is more fun.
+This is my attempt of making a Tic-Tac-Toe game in C. I saw plenty of implementations of the game using different Algorithms like Minimax, but I wanted to try a simple, randomized appraoch. 
+
+You can definetely beat the machine. 
+
 
 ## Game Structure
 - Player places an 'X' while the computer places an 'O'
