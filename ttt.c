@@ -81,3 +81,76 @@ int checkWinner(){
 	}
 	return 0;
 }
+
+void playerMove(){
+	int move;
+    char buffer; // Used to clear invalid input
+
+    do {
+        printf("Enter your move (1-9): ");
+        
+        // Check if input is a valid integer
+        if (scanf("%d", &move) != 1) {
+            printf("Invalid input! Please enter a number between 1 and 9.\n");
+            
+            // Clear invalid input
+            while ((buffer = getchar()) != '\n' && buffer != EOF);
+            continue; // Restart the loop
+        }
+
+        move--; // Convert user input (1-9) to array index (0-8)
+
+        // Check if move is valid (within range and unoccupied)
+        if (move < 0 || move >= 9 || board[move] != EMPTY) {
+            printf("Invalid move! Choose an empty position between 1 and 9.\n");
+        }
+
+    } while (move < 0 || move >= 9 || board[move] != EMPTY);
+
+    board[move] = PLAYER; // Places 'X' on the board
+	
+}
+
+/* no engine algorithm: computer makes a random legal move */
+void computerMove(){
+	int move;
+	do {
+		move = rand() % 8; // pick a random number from 0-9
+	} while (board[move] != EMPTY);  // ensure that spot is empty
+		board[move] = COMPUTER; // places 'O' on the board
+	
+}
+
+void mainGameLoop(){
+	initBoard(); // reset board
+	printReferenceBoard(); // show coords reference before game starts
+	printBoard(); // show empty board
+	
+	while (isMovesLeft()){
+		playerMove(); // player starts first
+		printBoard(); 
+		
+		if (checkWinner() == 1){
+			printf("You beat the machine!\n");
+			return;
+		}
+		if (!isMovesLeft()) break; // stop if board becomes full
+		
+		computerMove();
+		printBoard();
+		
+		if (checkWinner() == 2){
+			printf("Sorry!! -- You lost!\n");
+			return;
+		}
+	}
+	
+	printf("It's a draw!\n"); 
+}
+
+// main function
+int main(){
+	srand(time(0)); // seed random num for computer moves
+	mainGameLoop(); // start game
+	return 0;
+}
