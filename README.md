@@ -81,3 +81,52 @@ void printBoard() {
     printf("\n");
 }
 ```
+
+
+### Checking for Available Legal Moves
+This function will check if a space is empty, in which it is, we return 1 (moves are available to make)
+- if board is full, we return 0; game ends
+```
+int isMovesLeft(){
+	for (int i = 0; i < 9; i++){
+		if (board[i] == EMPTY){
+			return 1; // if any spaces are empty, true
+		}
+	}
+	return 0; // none are left
+}
+```
+
+### Checking for a Winner
+We need to add a function that defines winning conditions, by creating those conditions, and comparing those positions with all winning patterns
+Here is a step by step breakdown of how to implement this:
+- all winning combinations are stored in an array, of a sub-array {a, b, c}, which form a winning line
+- in tic-tac-toe, you only win by forming a solid row, column, or diagonal with 3 board positions
+- in this, we're going to loop through all 8 winning conditions constantly, until a winning combination was found
+- we check if all 3 positions in the current winning pattern have that same symbol (player or computer)
+X X X win for user
+O O O win for computer
+X O X no win, we continue checking
+- if a winning condition is true; stop the checking loop
+- if no winning pattern is found, return 0; (game continues until board is complete)
+
+```
+int checkWinner(){
+	// all winning combinations
+	int winPatterns[8][3] = {
+		{0, 1, 2}, {3, 4, 5}, {6, 7, 8},  // cows
+        {0, 3, 6}, {1, 4, 7}, {2, 5, 8},  // columns
+        {0, 4, 8}, {2, 4, 6}              // diagonals
+	};
+	
+	for (int i = 0; i < 8; i++){
+		int a = winPatterns[i][0], b = winPatterns[i][1], c = winPatterns[i][2];
+		
+		// checking if all three spots match and are not empty
+		if (board[a] == board[b] && board[b] == board[c] && board[a] != EMPTY){
+			return (board[a] == PLAYER) ? 1 : 2; // 1 = player wins, 2 = computer wins
+		}
+	}
+	return 0;
+}
+```
