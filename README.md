@@ -130,3 +130,109 @@ int checkWinner(){
 	return 0;
 }
 ```
+
+
+### Player's Move
+This handles user input, for printing a prompt, validating input, and updating the board accordingly to what the user wants to play:
+- performing a do-while loop to ensure player enters an actual valid move
+- adjusting the user input to match the array's index: 1-9, to 0-8
+- loop repeats itself, if moves are out of bounds or if that position is already occupied
+- whatever that move was, we assign the PLAYER 'X' to that chosen position
+```
+void playerMove(){
+	int move;
+    char buffer; // Used to clear invalid input
+
+    do {
+        printf("Enter your move (1-9): ");
+        
+        // Check if input is a valid integer
+        if (scanf("%d", &move) != 1) {
+            printf("Invalid input! Please enter a number between 1 and 9.\n");
+            
+            // Clear invalid input
+            while ((buffer = getchar()) != '\n' && buffer != EOF);
+            continue; // Restart the loop
+        }
+
+        move--; // Convert user input (1-9) to array index (0-8)
+
+        // Check if move is valid (within range and unoccupied)
+        if (move < 0 || move >= 9 || board[move] != EMPTY) {
+            printf("Invalid move! Choose an empty position between 1 and 9.\n");
+        }
+
+    } while (move < 0 || move >= 9 || board[move] != EMPTY);
+
+    board[move] = PLAYER; // Places 'X' on the board
+	
+}
+```
+
+### Computer Move
+Likewise, again, this is no complex algorithm where the machine can win, this is a simple random move implementation where the machine check's if a move can be played, through randon number generation, and plays it.
+- using a do-while looop, that move is randomized through 0-8, which corresponds to the board positions
+- the do-while loop continues, only when positions are empty, same idea for the playerMove() function
+- if a move is valid and legal, we assign the COMPUTER 'O' on that randomized position
+```
+void computerMove(){
+	int move;
+	do {
+		move = rand() % 8; // pick a random number from 0-9
+	} while (board[move] != EMPTY);  // ensure that spot is empty
+		board[move] = COMPUTER; // places 'O' on the board
+	
+}
+```
+
+### The Game Loop
+This serves as the main loop, alternating between player and computer's moves, updating the board accordingly, and checking winning conditions.
+- initBoard(): initialize the board on the screen, and, printReferenceBoard(): displaying the reference grid showing the coordinates of the board (this makes it useful for the user to know what to input)
+- printBoard(): display the empty game board
+- while isMovesLeft(): keep playing as long as there are moves left to play --> player plays first, then computer
+- check for winning conditions:
+	--> return 1 if player has won
+	--> return 2 if computer has on
+	--> if board is full, loop exits and it becomes a draw
+	
+```
+void mainGameLoop(){
+	initBoard(); // reset board
+	printReferenceBoard(); // show coords reference before game starts
+	printBoard(); // show empty board
+	
+	while (isMovesLeft()){
+		playerMove(); // player starts first
+		printBoard(); 
+		
+		if (checkWinner() == 1){
+			printf("You beat the machine!\n");
+			return;
+		}
+		if (!isMovesLeft()) break; // stop if board becomes full
+		
+		computerMove();
+		printBoard();
+		
+		if (checkWinner() == 2){
+			printf("Sorry!! -- You lost!\n");
+			return;
+		}
+	}
+	
+	printf("It's a draw!\n"); 
+}
+```
+
+
+### Function Prototypes
+```
+void initBoard();
+void printBoard();
+void printReferenceBoard();
+int isMovesLeft();
+int checkWinner();
+void playerMove();
+void computerMove();
+void mainGameLoop();
+```
